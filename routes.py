@@ -3,7 +3,7 @@
 # @Last modified by:   schwarze_falke
 # @Last modified time: 2019-02-21T01:05:19-06:00
 
-from flask import Flask
+from flask import Flask, request, jsonify, make_response
 
 import MySQLdb
 import os
@@ -23,3 +23,32 @@ def index():
         print(row[0])
     db.close()
     return 'Welcome to VoteBlock!'
+
+
+@app.route('/login/', methods=['GET'])
+def login():
+    return response
+
+
+@app.route('/signup/', methods=['POST'])
+def login():
+    return response
+
+
+@app.route('/candidate/', methods=['POST'])
+def login():
+    return response
+
+
+@app.route('/candidate/', methods=['DELETE'])
+def login():
+    return response
+
+
+@app.route('/vote/', methods=['POST'])
+def login():
+    return response
+
+
+if __name__ == "__main__":
+    app.run()
