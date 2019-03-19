@@ -25,29 +25,29 @@ def index():
     return 'Welcome to VoteBlock!'
 
 
-@app.route('/login/', methods=['GET'])
-def login():
-    return response
+# @app.route('/login/', methods=['GET'])
+# def login():
+#    return response
 
 
-@app.route('/signup/', methods=['POST'])
-def login():
-    return response
+# @app.route('/signup/', methods=['POST'])
+# def login():
+#    return response
 
 
-@app.route('/candidate/', methods=['POST'])
-def login():
-    return response
+# @app.route('/candidate/', methods=['POST'])
+# def login():
+#    return response
 
 
-@app.route('/candidate/', methods=['DELETE'])
-def login():
-    return response
+# @app.route('/candidate/', methods=['DELETE'])
+# def login():
+#    return response
 
 
-@app.route('/vote/', methods=['POST'])
-def login():
-    return response
+# @app.route('/vote/', methods=['POST'])
+# def login():
+#    return response
 
 
 if __name__ == "__main__":
