@@ -1,10 +1,3 @@
-/**
- * @Author: schwarze_falke
- * @Date:   2019-02-20T12:35:05-06:00
- * @Last modified by:   schwarze_falke
- * @Last modified time: 2019-02-20T23:56:25-06:00
- */
-
  CREATE DATABASE VotoBlock_DB;
  USE VotoBlock_DB;
  CREATE TABLE user (

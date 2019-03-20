@@ -1,13 +1,8 @@
-# @Author: schwarze_falke
-# @Date:   2019-02-21T00:51:54-06:00
-# @Last modified by:   schwarze_falke
-# @Last modified time: 2019-02-21T01:05:19-06:00
-
 from flask import Flask, request, jsonify, make_response
+from dotenv import load_dotenv
 
 import mysql.connector
 import os
-from dotenv import load_dotenv
 load_dotenv()  # Load .env file with the env variables
 
 app = Flask(__name__)
@@ -46,9 +41,17 @@ def index():
 #    return response
 
 
-# @app.route('/vote/', methods=['POST'])
-# def login():
-#    return response
+@app.route('/vote', methods=['GET', 'POST'])
+def generateVote():
+    param = request.args.get('username')
+    print(param)
+    return param
+
+
+@app.route('/election/', methods=['GET'])
+def getElectionResults():
+
+    return response
 
 
 if __name__ == "__main__":
