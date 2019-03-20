@@ -5,7 +5,7 @@
 
 from flask import Flask, request, jsonify, make_response
 
-import MySQLdb
+import mysql.connector
 import os
 from dotenv import load_dotenv
 load_dotenv()  # Load .env file with the env variables
@@ -15,8 +15,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    db = MySQLdb.connect(host=os.getenv("DB_HOST"), user=os.getenv("DB_USER"),
-                         passwd=os.getenv("DB_PASS"), db=os.getenv("DB_NAME"))
+    db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
+                                 host=os.getenv("DB_HOST"),
+                                 database=os.getenv("DB_NAME"))
     cursor = db.cursor()
     cursor.execute("SHOW TABLES")
     for row in cursor.fetchall():
