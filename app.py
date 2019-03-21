@@ -1,9 +1,16 @@
-from flask import Flask, request, jsonify, make_response
 from dotenv import load_dotenv
+from flask import Flask, request, jsonify, make_response
+
+from vote import Vote
 
 import mysql.connector
 import os
 load_dotenv()  # Load .env file with the env variables
+
+connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
+                                     host=os.getenv("DB_HOST"),
+                                     database=os.getenv("DB_NAME"))
+cursor = connection.cursor()
 
 app = Flask(__name__)
 
@@ -11,17 +18,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
-                                 host=os.getenv("DB_HOST"),
-                                 database=os.getenv("DB_NAME"))
-
-    cursor = db.cursor()
-    cursor.execute("SHOW TABLES")
-    for row in cursor.fetchall():
-        print(row[0])
-    db.close()
-    return 'Welcome to VoteBlock!'
-
+    response = make_response(str('Welcome to VotoBlock!'))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/verify/elections/', methods=['GET'])
 def verifyElectionPeriod():
@@ -77,12 +76,29 @@ def getCandidateInformation():
 # def login():
 #    return response
 
+# Section: Vote routes
+@app.route('/vote', methods=['GET'])
+def getVote():
+    vote = Vote(connection, cursor)
+    voteKey = request.form.get('vote')
+    response = make_response(
+        str(vote.retrieveVote(voteKey))[2:-1]
+    )
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
-@app.route('/vote', methods=['GET', 'POST'])
-def generateVote():
-    param = request.args.get('username')
-    print(param)
-    return param
+
+@app.route('/vote', methods=['POST'])
+def postVote():
+    vote = Vote(connection, cursor)
+    voterKey = request.form.get('voter')
+    electionKey = request.form.get('election')
+    candidateKey = request.form.get('candidate')
+    response = make_response(
+        str(vote.generateVote(electionKey, voterKey, candidateKey))
+    )
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/election/', methods=['GET'])
