@@ -50,9 +50,8 @@ def generateVote():
 
 @app.route('/election/', methods=['GET'])
 def getElectionResults():
-
     return response
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=os.getenv("PORT"))
