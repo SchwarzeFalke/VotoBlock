@@ -33,34 +33,34 @@ CREATE TABLE voter
   birth_date DATE,
   FOREIGN KEY (electoral_key)
    REFERENCES user(electoral_key)
-);
-CREATE TABLE candidate
-(
-  electoral_key VARCHAR(25) NOT NULL,
-  name VARCHAR(25) NOT NULL,
-  middle_name VARCHAR(25),
-  flastname VARCHAR(25) NOT NULL,
-  mlastname VARCHAR(25),
-  party VARCHAR(25) NOT NULL,
-  candidacy VARCHAR(25) NOT NULL,
-  status VARCHAR(1) NOT NULL,
-  FOREIGN KEY (electoral_key)
-   REFERENCES user(electoral_key)
-);
-CREATE TABLE proposal
-(
-  candidate_key VARCHAR(25) NOT NULL,
-  description VARCHAR(100) NOT NULL,
-  FOREIGN KEY (candidate_key)
-   REFERENCES candidate(electoral_key)
-);
-CREATE TABLE election (
+ );
+ CREATE TABLE election (
    _id INT PRIMARY KEY AUTO_INCREMENT,
    period DATE NOT NULL,
-   descript VARCHAR
-(50) NOT NULL,
+   descript VARCHAR(50) NOT NULL,
    begining DATETIME NOT NULL,
    ending DATETIME NOT NULL
+ );
+ CREATE TABLE candidate (
+   electoral_key VARCHAR(25) NOT NULL,
+   election_id INT NOT NULL,
+   name VARCHAR(25) NOT NULL,
+   middle_name VARCHAR(25),
+   flastname VARCHAR(25) NOT NULL,
+   mlastname VARCHAR(25),
+   party VARCHAR(25) NOT NULL,
+   candidacy VARCHAR(25) NOT NULL,
+   status VARCHAR(1) NOT NULL,
+   FOREIGN KEY (electoral_key)
+   REFERENCES user(electoral_key),
+   FOREIGN KEY (election_id)
+   REFERENCES election(_id)
+ );
+ CREATE TABLE proposal (
+   candidate_key VARCHAR(25) NOT NULL,
+   description VARCHAR(100) NOT NULL,
+   FOREIGN KEY (candidate_key)
+   REFERENCES candidate(electoral_key)
  );
 CREATE TABLE vote (
    _id INT PRIMARY KEY AUTO_INCREMENT,
