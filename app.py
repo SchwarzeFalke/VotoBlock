@@ -34,6 +34,21 @@ def verifyElectionPeriod():
     return jsonify(elections)
 
 
+
+@app.route('/election/', methods=['GET'])
+def getElectionResults():
+    db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
+                                 host=os.getenv("DB_HOST"),
+                                 database=os.getenv("DB_NAME"))
+    cursor = db.cursor()
+    electionid= request.args.get('electionid')
+    cursor.execute("SELECT * FROM election WHERE _id = '{}'".format(electionid))
+    elections = cursor.fetchall()
+    electionDictionary = {}
+    lista =[]   
+    return jsonify(elections)
+
+
 @app.route('/verify/candidates/', methods=['GET'])
 def verifyAvailableCandidates():
     db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
@@ -100,10 +115,6 @@ def postVote():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-
-@app.route('/election/', methods=['GET'])
-def getElectionResults():
-    return response
 
 
 if __name__ == "__main__":
