@@ -27,4 +27,5 @@ pip install --user virtualenv
 (env) pip install mysql-connector-python
 (env) pip install Flask
 (env) pip install python-dotenv
+(env) pip install pycrypto
 ```
