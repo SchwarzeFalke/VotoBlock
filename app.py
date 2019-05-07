@@ -15,12 +15,12 @@ cursor = connection.cursor()
 app = Flask(__name__)
 
 
-
 @app.route('/')
 def index():
     response = make_response(str('Welcome to VotoBlock!'))
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 @app.route('/verify/elections/', methods=['GET'])
 def verifyElectionPeriod():
@@ -34,18 +34,18 @@ def verifyElectionPeriod():
     return jsonify(elections)
 
 
-
 @app.route('/election/', methods=['GET'])
 def getElectionResults():
     db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                  host=os.getenv("DB_HOST"),
                                  database=os.getenv("DB_NAME"))
     cursor = db.cursor()
-    electionid= request.args.get('electionid')
-    cursor.execute("SELECT * FROM election WHERE _id = '{}'".format(electionid))
+    electionid = request.args.get('electionid')
+    cursor.execute(
+        "SELECT * FROM election WHERE _id = '{}'".format(electionid))
     elections = cursor.fetchall()
     electionDictionary = {}
-    lista =[]   
+    lista = []
     return jsonify(elections)
 
 
@@ -57,7 +57,8 @@ def verifyAvailableCandidates():
 
     cursor = db.cursor()
     electionId = request.args.get('election_id')
-    cursor.execute("SELECT electoral_key, name, middle_name, mlastname, flastname FROM candidate WHERE election_id = '{}'".format(electionId))
+    cursor.execute(
+        "SELECT electoral_key, name, middle_name, mlastname, flastname FROM candidate WHERE election_id = '{}'".format(electionId))
     candidates = cursor.fetchall()
     return jsonify(candidates)
 
@@ -71,10 +72,10 @@ def getCandidateInformation():
     cursor = db.cursor()
     electoral_key = request.args.get('electoral_key')
     print(electoral_key)
-    cursor.execute("SELECT * FROM candidate WHERE electoral_key = '{}'".format(electoral_key))
+    cursor.execute(
+        "SELECT * FROM candidate WHERE electoral_key = '{}'".format(electoral_key))
     candidate = cursor.fetchall()
     return jsonify(candidate)
-
 
 
 # @app.route('/login/', methods=['GET'])
@@ -114,7 +115,6 @@ def postVote():
     )
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
-
 
 
 if __name__ == "__main__":
