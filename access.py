@@ -22,7 +22,7 @@ class Access:
         privileges = 'V'
         value = None
         insert = (
-            "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)"
+            "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %s)"
         )
         try:
             self.cursor.execute(
