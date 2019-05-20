@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, make_response
+from flask.ext.cors import CORS, cross_origin
 
 from vote import Vote
 from access import Access
@@ -14,6 +15,10 @@ connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.gete
 cursor = connection.cursor()
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy   dog'
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 
 
 @app.route('/')
@@ -80,6 +85,7 @@ def getCandidateInformation():
 
 
 @app.route('/login/', methods=['POST'])
+@cross_origin(origin='localhost', headers=['Content- Type', 'Authorization'])
 def login():
     login_access = Access(connection, cursor)
     electoral_key = request.form.get('electoral_key')
@@ -100,6 +106,7 @@ def signup():
     response = make_response(
         str(signup_access.register(str(electoral_key), str(password), str(mail)))
     )
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 # Section: Vote routes
