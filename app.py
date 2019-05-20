@@ -85,7 +85,7 @@ def login():
     electoral_key = request.form.get('electoral_key')
     password = request.form.get('pass')
     response = make_response(
-        str(login_access.login(electoral_key, password))
+        str(login_access.login(str(electoral_key), str(password)))
     )
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

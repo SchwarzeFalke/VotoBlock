@@ -18,7 +18,7 @@ class Access:
         return(json.dumps({'items': items}))
 
     def register(self, electoralKey, password, email):
-        hashKey = hashlib.sha256(str(password).encode()).hexdigest()
+        hashKey = hashlib.sha256(password.encode()).hexdigest()
         privileges = 'V'
         value = None
         insert = (
