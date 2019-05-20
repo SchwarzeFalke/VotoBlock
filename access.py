@@ -18,19 +18,12 @@ class Access:
         return(json.dumps({'items': items}))
 
     def register(self, electoralKey, password, email):
-        hashKey = hashlib.sha256(password.encode()).hexdigest()
+        hashKey = hashlib.sha256(str(password).encode()).hexdigest()
         privileges = 'V'
         value = None
-        #    electoral_key VARCHAR(25) PRIMARY KEY NOT NULL,
-        #    password VARCHAR(25) NOT NULL,
-        #    email VARCHAR(40) NOT NULL,
-        #    privilages CHAR(1) NOT NULL,
-        #    profile_pic LONGBLOB,
-        #    exist BOOLEAN NOT NULL
         insert = (
             "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)")
-
-        print(self.cursor.execute(
-            insert, (electoralKey, hashKey, email, privileges, value, True)))
+        self.cursor.execute(
+            insert, (electoralKey, hashKey, email, privileges, value, True))
         self.connection.commit()
         return 'Ok'
