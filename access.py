@@ -26,7 +26,7 @@ class Access:
         )
         try:
             self.cursor.execute(
-                insert, (electoralKey, hashKey, email, privileges, value, True))
+                insert, (electoralKey, hashKey, email, privileges, value, True,))
             self.connection.commit()
             self.connection.close()
         except self.connection.Error as err:
