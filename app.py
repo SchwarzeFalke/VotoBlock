@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS
 
 from vote import Vote
 from access import Access
