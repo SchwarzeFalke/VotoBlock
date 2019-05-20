@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, make_response
-from flask_cors import CORS, cross_origin
 
 from vote import Vote
 from access import Access
@@ -15,12 +14,9 @@ connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.gete
 cursor = connection.cursor()
 
 app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/')
-@cross_origin()
 def index():
     response = make_response(str('Welcome to VotoBlock!'))
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -28,7 +24,6 @@ def index():
 
 
 @app.route('/verify/elections/', methods=['GET'])
-@cross_origin()
 def verifyElectionPeriod():
     db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                  host=os.getenv("DB_HOST"),
@@ -41,7 +36,6 @@ def verifyElectionPeriod():
 
 
 @app.route('/election/', methods=['GET'])
-@cross_origin()
 def getElectionResults():
     db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                  host=os.getenv("DB_HOST"),
@@ -57,7 +51,6 @@ def getElectionResults():
 
 
 @app.route('/verify/candidates/', methods=['GET'])
-@cross_origin()
 def verifyAvailableCandidates():
     db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                  host=os.getenv("DB_HOST"),
@@ -72,7 +65,6 @@ def verifyAvailableCandidates():
 
 
 @app.route('/candidate/information/', methods=['GET'])
-@cross_origin()
 def getCandidateInformation():
     db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                  host=os.getenv("DB_HOST"),
@@ -88,7 +80,6 @@ def getCandidateInformation():
 
 
 @app.route('/login/', methods=['POST'])
-@cross_origin()
 def login():
     login_access = Access(connection, cursor)
     electoral_key = request.form.get('electoral_key')
@@ -96,12 +87,11 @@ def login():
     response = make_response(
         str(login_access.login(str(electoral_key), str(password)))
     )
-    #response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
 @app.route('/signup/', methods=['POST'])
-@cross_origin()
 def signup():
     signup_access = Access(connection, cursor)
     electoral_key = request.form.get('electoral_key')
@@ -114,7 +104,6 @@ def signup():
 
 # Section: Vote routes
 @app.route('/vote', methods=['GET'])
-@cross_origin()
 def getVote():
     vote = Vote(connection, cursor)
     voteKey = request.form.get('vote')
@@ -126,7 +115,6 @@ def getVote():
 
 
 @app.route('/vote', methods=['POST'])
-@cross_origin()
 def postVote():
     vote = Vote(connection, cursor)
     voterKey = request.form.get('voter')
