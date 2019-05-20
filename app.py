@@ -7,6 +7,8 @@ from access import Access
 
 import mysql.connector
 import os
+import json
+
 load_dotenv()  # Load .env file with the env variables
 
 connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
