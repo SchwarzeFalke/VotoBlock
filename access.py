@@ -21,8 +21,8 @@ class Access:
         hashKey = hashlib.sha256(password.encode()).hexdigest()
         privileges = 'V'
         value = None
-        insert = (
-            "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)")
+        insert = ("USE heroku_762c2337aac5ea2;" +
+                  "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)")
         self.cursor.execute(
             insert, (electoralKey, hashKey, email, privileges, value, True))
         self.connection.commit()
