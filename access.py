@@ -24,7 +24,11 @@ class Access:
         insert = (
             "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)"
         )
-        self.cursor.execute(
-            insert, (electoralKey, hashKey, email, privileges, value, True))
-        self.connection.commit()
+        try:
+            self.cursor.execute(
+                insert, (electoralKey, hashKey, email, privileges, value, True))
+            self.connection.commit()
+            self.connection.close()
+        except self.connection.Error as err:
+            print("Something went wrong: {}".format(err))
         return 'Ok'
