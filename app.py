@@ -96,7 +96,7 @@ def login():
     response = make_response(
         str(login_access.login(str(electoral_key), str(password)))
     )
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    #response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
