@@ -7,6 +7,7 @@ CREATE TABLE user
    password VARCHAR(25) NOT NULL,
    email VARCHAR(40) NOT NULL,
    privilages CHAR(1) NOT NULL,
+   profile_pic LONGBLOB,
    exist BOOLEAN NOT NULL
 );
 CREATE TABLE scrutineer
@@ -44,6 +45,12 @@ CREATE TABLE election (
    result VARCHAR
 (30)
  );
+CREATE TABLE party
+(
+   _id INT PRIMARY KEY NOT NULL,
+   name VARCHAR(25) NOT NULL,
+   logo LONGBLOB
+);
 CREATE TABLE candidate
 (
    electoral_key VARCHAR(25) NOT NULL,
@@ -52,13 +59,15 @@ CREATE TABLE candidate
    middle_name VARCHAR(25),
    flastname VARCHAR(25) NOT NULL,
    mlastname VARCHAR(25),
-   party VARCHAR(25) NOT NULL,
-   candidacy VARCHAR(25) NOT NULL,
+   party_id VARCHAR(25) NOT NULL,
+   candidacy INT NOT NULL,
    status VARCHAR(1) NOT NULL,
    FOREIGN KEY (electoral_key)
    REFERENCES user(electoral_key),
    FOREIGN KEY (election_id)
-   REFERENCES election(_id)
+   REFERENCES election(_id),
+   FOREIGN KEY (party_id)
+   REFERENCES party(_id)
 );
 CREATE TABLE proposal
 (
