@@ -10,7 +10,7 @@ load_dotenv()  # Load .env file with the env variables
 
 connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                      host=os.getenv("DB_HOST"),
-                                     database=os.getenv("DB"))
+                                     database=os.getenv("DB_NAME"))
 cursor = connection.cursor()
 
 app = Flask(__name__)
