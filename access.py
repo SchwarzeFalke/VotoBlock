@@ -27,8 +27,8 @@ class Access:
         #    profile_pic LONGBLOB,
         #    exist BOOLEAN NOT NULL
         insert = (
-            "INSERT INTO user(electoral_key, password, email, privilages) VALUES(%s, %s, %s, %s)")
+            "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)")
         self.cursor.execute(
-            insert, (electoralKey, hashKey, email, privileges,))
+            insert, (electoralKey, hashKey, email, privileges, "NULL", True))
         self.connection.commit()
         return 'Ok'
