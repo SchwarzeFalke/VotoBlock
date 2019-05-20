@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify, make_response
 
 from vote import Vote
+from access import Access
 
 import mysql.connector
 import os
@@ -78,14 +79,28 @@ def getCandidateInformation():
     return jsonify(candidate)
 
 
-# @app.route('/login/', methods=['GET'])
-# def login():
-#    return response
+@app.route('/login/', methods=['GET'])
+def login():
+    login_access = Access(connection, cursor)
+    electoral_key = request.form.get('electoral_key')
+    password = request.form.get('pass')
+    response = make_response(
+        str(login_access.login(electoral_key, password))
+    )
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
-# @app.route('/signup/', methods=['POST'])
-# def login():
-#    return response
+@app.route('/signup/', methods=['POST'])
+def signup():
+    signup_access = Access(connection, cursor)
+    electoral_key = request.form.get('electoral_key')
+    password = request.form.get('pass')
+    mail = request.form.get('email')
+    response = make_response(
+        str(signup_access.register(electoral_key, password, mail))
+    )
+    return response
 
 
 # @app.route('/candidate/', methods=['DELETE'])
