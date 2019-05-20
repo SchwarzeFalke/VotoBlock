@@ -14,6 +14,7 @@ connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.gete
 cursor = connection.cursor()
 
 app = Flask(__name__)
+cors = CORS(app)
 
 
 @app.route('/')
@@ -87,7 +88,7 @@ def login():
     response = make_response(
         str(login_access.login(str(electoral_key), str(password)))
     )
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:8100/home'
+    response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
