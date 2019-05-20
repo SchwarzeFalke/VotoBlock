@@ -15,7 +15,6 @@ cursor = connection.cursor()
 id = 0
 for _ in range(2000):
     voter = fake.profile(fields=None, sex=None)
-
     fake_user = (
         "INSERT INTO user(electoral_key, password, email, privilages, exist) VALUES(%s, %s, %s, %s, %s)"
     )
