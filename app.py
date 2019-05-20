@@ -6,6 +6,7 @@ from access import Access
 
 import mysql.connector
 import os
+import json
 load_dotenv()  # Load .env file with the env variables
 
 connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
@@ -94,9 +95,9 @@ def login():
 @app.route('/signup/', methods=['POST'])
 def signup():
     signup_access = Access(connection, cursor)
-    electoral_key = request.form.get('electoral_key')
-    password = request.form.get('pass')
-    mail = request.form.get('email')
+    electoral_key = json.dumps(request.json)['electoral_key']
+    password = json.dumps(request.json)['pass']
+    mail = json.dumps(request.json)['email']
     response = make_response(
         str(signup_access.register(electoral_key, password, mail))
     )
