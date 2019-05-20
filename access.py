@@ -20,6 +20,7 @@ class Access:
     def register(self, electoralKey, password, email):
         hashKey = hashlib.sha256(password.encode()).hexdigest()
         privileges = 'V'
+        value = None
         #    electoral_key VARCHAR(25) PRIMARY KEY NOT NULL,
         #    password VARCHAR(25) NOT NULL,
         #    email VARCHAR(40) NOT NULL,
@@ -29,6 +30,6 @@ class Access:
         insert = (
             "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)")
         self.cursor.execute(
-            insert, (electoralKey, hashKey, email, privileges, "NULL", True))
+            insert, (electoralKey, hashKey, email, privileges, value, True))
         self.connection.commit()
         return 'Ok'
