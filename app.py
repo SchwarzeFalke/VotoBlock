@@ -79,7 +79,7 @@ def getCandidateInformation():
     return jsonify(candidate)
 
 
-@app.route('/login/', methods=['GET'])
+@app.route('/login/', methods=['POST'])
 def login():
     login_access = Access(connection, cursor)
     electoral_key = request.form.get('electoral_key')
@@ -101,11 +101,6 @@ def signup():
         str(signup_access.register(str(electoral_key), str(password), str(mail)))
     )
     return response
-
-
-# @app.route('/candidate/', methods=['DELETE'])
-# def login():
-#    return response
 
 # Section: Vote routes
 @app.route('/vote', methods=['GET'])
