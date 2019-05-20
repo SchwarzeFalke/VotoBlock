@@ -29,7 +29,8 @@ class Access:
         #    exist BOOLEAN NOT NULL
         insert = (
             "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %)")
-        self.cursor.execute(
-            insert, (electoralKey, hashKey, email, privileges, value, True))
+
+        print(self.cursor.execute(
+            insert, (electoralKey, hashKey, email, privileges, value, True)))
         self.connection.commit()
         return 'Ok'
