@@ -13,7 +13,7 @@ class Vote:
         composedKey = composedKey1.encode('utf-8')
         hashKey = hashlib.sha256(composedKey).hexdigest()[0:32]
         cypher = AES.new(hashKey.rjust(32), AES.MODE_ECB)
-        encoded = base64.b64encode(cypher.encrypt(composedKey.rjust(32)))
+        encoded = base64.b64encode(cypher.encrypt(composedKey.rjust(16)))
         i = 32
         pointer = -1
         while(i > 0):
