@@ -16,7 +16,7 @@ class Access:
         result = self.cursor.fetchall()
         # items = [dict(zip([key[0] for key in self.cursor.description], row))
         #         for row in result]
-        self.connection.close()
+        # self.connection.close()
         return(result)
 
     def register(self, electoralKey, password, email):

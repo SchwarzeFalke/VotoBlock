@@ -59,7 +59,7 @@ CREATE TABLE candidate
    middle_name VARCHAR(25),
    flastname VARCHAR(25) NOT NULL,
    mlastname VARCHAR(25),
-   party_id VARCHAR(25) NOT NULL,
+   party_id INT NOT NULL,
    candidacy INT NOT NULL,
    status VARCHAR(1) NOT NULL,
    FOREIGN KEY (electoral_key)
