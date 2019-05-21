@@ -75,13 +75,14 @@ class Fakerism:
         for row in candidates:
             create_candidate = Candidate(self.connection, self.cursor)
             electoral_key = row[0]
+            election_id = 2
             party = parties[i][0]
             name = fake.first_name()
             middle_name = fake.first_name()
             flastname = fake.last_name()
             mlastname = fake.last_name()
 
-            create_candidate.create(electoral_key, name, middle_name,
+            create_candidate.create(electoral_key, election_id, name, middle_name,
                                     flastname, mlastname, party)
             i += 1
 
