@@ -18,7 +18,7 @@ class Fakerism:
         fake = Faker('es_MX')
 
         id = 0
-        for _ in range(100):
+        for _ in range(20):
             create_user = Access(self.connection, self.cursor)
             electoral_key = fake.bban()
             password = fake.password(
@@ -33,7 +33,7 @@ class Fakerism:
     def fake_voters(self):
         fake = Faker('es_MX')
         select = (
-            "SELECT TOP 1500 electoral_key FROM user ORDER BY electoral_key ASC"
+            "SELECT TOP 15 electoral_key FROM user ORDER BY electoral_key ASC"
         )
         self.cursor.execute(select)
         result = self.cursor.fetchall()

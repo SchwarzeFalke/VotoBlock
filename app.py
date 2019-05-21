@@ -139,8 +139,8 @@ def postVote():
 def fake_chained_data():
     faking = Fakerism(connection, cursor)
     response_user = str(faking.fake_users())
-    #response_voter = str(faking.fake_voters())
-    response = make_response(response_user, 200)
+    response_voter = str(faking.fake_voters())
+    response = make_response(response_user+response_voter, 200)
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
