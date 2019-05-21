@@ -31,7 +31,7 @@ class Fakerism:
             self.cursor.execute(
                 insert, (electoral_key, hashKey, mail, privileges, value, True,))
             self.connection.commit()
-            self.connection.close()
+            # self.connection.close()
         except self.connection.Error as err:
             print("Something went wrong: {}".format(err))
 
