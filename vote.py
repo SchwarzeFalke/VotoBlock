@@ -1,5 +1,5 @@
 from Crypto.Cipher import AES
-from padding import pad, unpad
+from Crypto.Util.Padding import pad
 import base64
 import hashlib
 
