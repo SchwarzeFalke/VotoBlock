@@ -17,7 +17,7 @@ class Access:
         # items = [dict(zip([key[0] for key in self.cursor.description], row))
         #         for row in result]
         # self.connection.close()
-        return(result)
+        return(select, electoralKey, hashKey)
 
     def register(self, electoralKey, password, email):
         hashKey = hashlib.sha256(password.encode()).hexdigest()
