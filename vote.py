@@ -11,7 +11,7 @@ class Vote:
     def generateVote(self, electionKey, voterKey, candidateKey):
         composedKey = electionKey+voterKey+candidateKey
         hashKey = hashlib.sha256(composedKey.encode('utf-8')).hexdigest()[0:32]
-        print(hashKey)
+        print(composedKey.encode('utf-8').rjust(32))
         cypher = AES.new(hashKey.rjust(32), AES.MODE_ECB)
         encoded = base64.b64encode(cypher.encrypt(
             composedKey.encode('utf-8').rjust(32)))
