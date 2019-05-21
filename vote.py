@@ -10,11 +10,11 @@ class Vote:
 
     def generateVote(self, electionKey, voterKey, candidateKey):
         composedKey = electionKey+voterKey+candidateKey
-        hashKey = hashlib.sha256(composedKey.encode('utf-8')).hexdigest()[0:32]
-        print(composedKey.encode('utf-8').rjust(32))
+        hashKey = hashlib.sha256(composedKey[0:32].encode('utf-8')).hexdigest()
+
         cypher = AES.new(hashKey.rjust(32), AES.MODE_ECB)
         encoded = base64.b64encode(cypher.encrypt(
-            composedKey.encode('utf-8').hexdigest()[0:32]))
+            composedKey[0:32].encode('utf-8').rjust(32)))
         i = 32
         pointer = -1
         while(i > 0):
