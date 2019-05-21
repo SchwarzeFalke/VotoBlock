@@ -14,4 +14,3 @@ class Voter:
         self.cursor.execute(insert, (electoral_key, name, middle_name,
                                      flastname, mlastname, address, birth_date))
         self.connection.commit()
-        self.connection.close()

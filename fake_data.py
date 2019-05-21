@@ -14,7 +14,7 @@ class Fakerism:
         self.connection = connection
         self.cursor = cursor
 
-    def fake_users(self):
+    def fake_user(self):
         insert = (
             "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %s)"
         )
@@ -37,14 +37,13 @@ class Fakerism:
 
         return('Ok')
 
-    def fake_voters(self):
+    def fake_voter(self):
         fake = Faker('es_MX')
         select = (
             "SELECT TOP 15 electoral_key FROM user ORDER BY electoral_key ASC"
         )
         self.cursor.execute(select)
         result = self.cursor.fetchall()
-        self.connection.close()
         for row in result:
             create_voter = Voter(self.connection, self.cursor)
             electoral_key = row["electoral_key"]

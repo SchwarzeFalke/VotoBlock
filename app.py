@@ -131,15 +131,27 @@ def postVote():
     response = make_response(
         str(vote.generateVote(electionKey, voterKey, candidateKey))
     )
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
 
 
-@app.route('/fake-chained-data', methods=['GET'])
-def fake_chained_data():
+@app.route('/fake/user', methods=['GET'])
+def fake_user():
     faking = Fakerism(connection, cursor)
-    response_user = str(faking.fake_users())
-    #response_voter = str(faking.fake_voters())
+    response_user = str(faking.fake_user())
+    response = make_response(response_user, 200)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
+
+@app.route('/fake/voter', methods=['GET'])
+def fake_voter():
+    faking = Fakerism(connection, cursor)
+    response_user = str(faking.fake_voter())
     response = make_response(response_user, 200)
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
