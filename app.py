@@ -249,7 +249,7 @@ def img_party():
     results = cursor.fetchall()
     blob = results[0][0]
     connection.close()
-    return(blob)
+    return jsonify(blob)
 
 
 if __name__ == "__main__":
