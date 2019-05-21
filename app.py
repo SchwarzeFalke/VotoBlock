@@ -2,9 +2,9 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 
-from vote import Vote
+#from vote import Vote
 from access import Access
-from fake_data import Fakerism
+#from fake_data import Fakerism
 
 import mysql.connector
 import os
@@ -82,6 +82,16 @@ def getCandidateInformation():
         "SELECT * FROM candidate WHERE electoral_key = '{}'".format(electoral_key))
     candidate = cursor.fetchall()
     return jsonify(candidate)
+
+@app.route('/get_voter_information', methods=['GET'])
+def getUserInformation():
+    db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
+                                 host=os.getenv("DB_HOST"),
+                                 database=os.getenv("DB_NAME"))
+    cursor = db.cursor()
+    cursor.execute("SELECT electoral_key, name, flastname, address FROM voter WHERE electoral_key = '1234'")
+    voter = cursor.fetchall()
+    return jsonify(voter)
 
 
 @app.route('/login/', methods=['POST'])
