@@ -16,18 +16,13 @@ class Fakerism:
 
     def fake_users(self):
         fake = Faker('es_MX')
-
-        id = 0
-        for _ in range(20):
-            create_user = Access(self.connection, self.cursor)
-            electoral_key = fake.bban()
-            password = fake.password(
-                length=20, special_chars=False, digits=True, upper_case=True, lower_case=True)
-            mail = fake.simple_profile(sex=None)['mail']
-            create_user.register(str(electoral_key), str(password), str(mail))
-            id += 1
-
-        result = "Amount of faked data: {}".format(id)
+        create_user = Access(self.connection, self.cursor)
+        electoral_key = fake.bban()
+        password = fake.password(
+            length=20, special_chars=False, digits=True, upper_case=True, lower_case=True)
+        mail = fake.simple_profile(sex=None)['mail']
+        result = create_user.register(
+            str(electoral_key), str(password), str(mail))
         return(result)
 
     def fake_voters(self):
