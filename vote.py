@@ -1,5 +1,4 @@
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
 import base64
 import hashlib
 
@@ -11,10 +10,11 @@ class Vote:
 
     def generateVote(self, electionKey, voterKey, candidateKey):
         composedKey = electionKey+voterKey+candidateKey
-        padded = pad(composedKey, AES.block_size, style='pkcs7')
-        hashKey = hashlib.sha256(padded.encode()).hexdigest()[0:32]
+        hashKey = hashlib.sha256(composedKey.encode('utf-8')).hexdigest()[0:32]
+        print(composedKey.encode('utf-8').len())
         cypher = AES.new(hashKey.rjust(32), AES.MODE_ECB)
-        encoded = base64.b64encode(cypher.encrypt(padded.rjust(32)))
+        encoded = base64.b64encode(cypher.encrypt(
+            composedKey.encode('utf-8').rjust(32)))
         i = 32
         pointer = -1
         while(i > 0):
