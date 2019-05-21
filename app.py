@@ -160,7 +160,7 @@ def getVote():
     return response
 
 
-@app.route('/vote', methods=['POST'])
+@app.route('/vote/', methods=['POST'])
 def postVote():
     connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                          host=os.getenv("DB_HOST"),
