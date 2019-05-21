@@ -160,7 +160,7 @@ def fake_voter():
 
 
 @app.route('/fake/candidate', methods=['GET'])
-def fake_voter():
+def fake_candidate():
     faking = Fakerism(connection, cursor)
     response_candidate = str(faking.fake_candidate())
     response = make_response(response_candidate, 200)
