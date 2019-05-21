@@ -46,7 +46,7 @@ class Fakerism:
         result = self.cursor.fetchall()
         for row in result:
             create_voter = Voter(self.connection, self.cursor)
-            electoral_key = row["electoral_key"]
+            electoral_key = row[0]
             name = fake.first_name()
             middle_name = fake.first_name()
             flastname = fake.last_name()
