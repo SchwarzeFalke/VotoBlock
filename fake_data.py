@@ -15,15 +15,27 @@ class Fakerism:
         self.cursor = cursor
 
     def fake_users(self):
+        insert = (
+            "INSERT INTO user(electoral_key, password, email, privilages, profile_pic, exist) VALUES(%s, %s, %s, %s, %s, %s)"
+        )
+
         fake = Faker('es_MX')
-        create_user = Access(self.connection, self.cursor)
         electoral_key = fake.bban()
+        privileges = 'V'
+        value = None
         password = fake.password(
             length=20, special_chars=False, digits=True, upper_case=True, lower_case=True)
+        hashKey = hashlib.sha256(password.encode()).hexdigest()
         mail = fake.simple_profile(sex=None)['mail']
-        result = create_user.register(
-            str(electoral_key), str(password), str(mail))
-        return(result)
+        try:
+            self.cursor.execute(
+                insert, (electoral_key, hashKey, mail, privileges, value, True,))
+            self.connection.commit()
+            self.connection.close()
+        except self.connection.Error as err:
+            print("Something went wrong: {}".format(err))
+
+        return('Ok')
 
     def fake_voters(self):
         fake = Faker('es_MX')
