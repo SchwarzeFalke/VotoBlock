@@ -229,7 +229,7 @@ def fake_candidate():
 
 
 @app.route('/img/party/', methods=['GET'])
-def verifyAvailableCandidates():
+def img_party():
     connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
                                          host=os.getenv("DB_HOST"),
                                          database=os.getenv("DB_NAME"))
