@@ -1,32 +1,53 @@
-import mysql.connector
-import os
-
-from dotenv import load_dotenv
 from faker import Faker
+from access import Access
+from vote import Vote
+from voter import Voter
 
-fake = Faker('es_MX')
-load_dotenv()  # Load .env file with the env variables
+import hashlib
+import json
+import os
+import mysql.connector
 
-connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
-                                     host=os.getenv("DB_HOST"),
-                                     database=os.getenv("DB_NAME"))
-cursor = connection.cursor()
 
-id = 0
-for _ in range(2000):
-    voter = fake.profile(fields=None, sex=None)
-    fake_user = (
-        "INSERT INTO user(electoral_key, password, email, privilages, exist) VALUES(%s, %s, %s, %s, %s)"
-    )
-    fake_voter = (
-        "INSERT INTO voter(electoral_key, name, middle_name, flastname, mlastname, address, birth_date) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-    )
+class Fakerism:
+    def __init__(self, connection, cursor):
+        self.connection = connection
+        self.cursor = cursor
 
-    cursor.execute(fake_user, (id, fake.password(length=20, special_chars=True, digits=True, upper_case=True, lower_case=True),
-                               voter['mail'], 'U', 1))
-    connection.commit()
+    def fake_users(self):
+        fake = Faker('es_MX')
 
-    cursor.execute(fake_voter, (id, fake.first_name(),
-                                fake.first_name(), fake.last_name(), fake.last_name(), voter['address'], voter['birthdate']))
-    connection.commit()
-    id += 1
+        id = 0
+        for _ in range(2000):
+            create_user = Access(self.connection, self.cursor)
+            electoral_key = fake.bban()
+            password = fake.password(
+                length=20, special_chars=True, digits=True, upper_case=True, lower_case=True)
+            mail = fake.simple_profile(sex=None)['mail']
+            create_user.register(str(electoral_key), str(password), str(mail))
+            id += 1
+
+        result = "Amount of faked data: {}".format(id)
+        return(result)
+
+    def fake_voters(self):
+        fake = Faker('es_MX')
+        select = (
+            "SELECT TOP 1500 electoral_key FROM user ORDER BY electoral_key ASC"
+        )
+        self.cursor.execute(select)
+        result = self.cursor.fetchall()
+        self.connection.close()
+        for row in result:
+            create_voter = Voter(self.connection, self.cursor)
+            electoral_key = row["electoral_key"]
+            name = fake.first_name()
+            middle_name = fake.first_name()
+            flastname = fake.last_name()
+            mlastname = fake.last_name()
+            address = fake.simple_profile(sex=None)['address']
+            birth_date = fake.simple_profile(sex=None)['birthdate']
+            create_voter.create(electoral_key, name, middle_name,
+                                flastname, mlastname, address, birth_date)
+
+        return("OK")
