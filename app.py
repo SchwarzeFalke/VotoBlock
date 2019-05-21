@@ -151,8 +151,19 @@ def fake_user():
 @app.route('/fake/voter', methods=['GET'])
 def fake_voter():
     faking = Fakerism(connection, cursor)
-    response_user = str(faking.fake_voter())
-    response = make_response(response_user, 200)
+    response_voter = str(faking.fake_voter())
+    response = make_response(response_voter, 200)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
+
+@app.route('/fake/candidate', methods=['GET'])
+def fake_voter():
+    faking = Fakerism(connection, cursor)
+    response_candidate = str(faking.fake_candidate())
+    response = make_response(response_candidate, 200)
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
