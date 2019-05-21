@@ -79,7 +79,14 @@ def verifyAvailableCandidates():
     electionId = request.args.get('election_id')
     cursor.execute(
         "SELECT electoral_key, name, middle_name, mlastname, flastname FROM candidate WHERE election_id = '{}'".format(electionId))
-    candidates = cursor.fetchall()
+    results = cursor.fetchall()
+    candidates = []
+    for row in results:
+        tempData = {
+            "electoral_key": row[0],
+            "full_name": row[1] + ' ' + row[2] + ' ' + row[3] + ' ' + row[4]
+        }
+        candidates.append(tempData)
     connection.close()
     return jsonify(candidates)
 
