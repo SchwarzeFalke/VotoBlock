@@ -40,7 +40,7 @@ class Fakerism:
     def fake_voter(self):
         fake = Faker('es_MX')
         select = (
-            "SELECT TOP 15 electoral_key FROM user ORDER BY electoral_key ASC"
+            "SELECT electoral_key FROM user ORDER BY electoral_key ASC LIMIT 20"
         )
         self.cursor.execute(select)
         result = self.cursor.fetchall()
