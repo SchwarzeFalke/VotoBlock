@@ -30,7 +30,7 @@ class Access:
             self.cursor.execute(
                 insert, (electoralKey, hashKey, email, privileges, value, True,))
             self.connection.commit()
-            self.connection.close()
+            # self.connection.close()
         except self.connection.Error as err:
             print("Something went wrong: {}".format(err))
         return 'Ok'
