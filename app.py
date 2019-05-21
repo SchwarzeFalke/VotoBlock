@@ -228,5 +228,29 @@ def fake_candidate():
     return response
 
 
+@app.route('/img/party/', methods=['GET'])
+def verifyAvailableCandidates():
+    connection = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
+                                         host=os.getenv("DB_HOST"),
+                                         database=os.getenv("DB_NAME"))
+    cursor = connection.cursor()
+    db = mysql.connector.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASS"),
+                                 host=os.getenv("DB_HOST"),
+                                 database=os.getenv("DB_NAME"))
+
+    cursor = db.cursor()
+    electoral_key = request.args.get('electoral_key')
+    cursor.execute(
+        "SELECT party_id FROM candidate WHERE electoral_key = '{}'".format(electoral_key))
+    results = cursor.fetchall()
+    party_id = results[0][0]
+    cursor.execute(
+        "SELECT logo FROM party WHERE _id = '{}'".format(party_id))
+    results = cursor.fetchall()
+    blob = results[0][0]
+    connection.close()
+    return(blob)
+
+
 if __name__ == "__main__":
     app.run(port=os.getenv("PORT"), debug=True)
