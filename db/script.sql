@@ -4,7 +4,7 @@ USE VotoBlock_DB;
 CREATE TABLE user
 (
    electoral_key VARCHAR(25) PRIMARY KEY NOT NULL,
-   password VARCHAR(25) NOT NULL,
+   password VARCHAR(64) NOT NULL,
    email VARCHAR(40) NOT NULL,
    privilages CHAR(1) NOT NULL,
    profile_pic LONGBLOB,
