@@ -18,7 +18,7 @@ class Fakerism:
         fake = Faker('es_MX')
 
         id = 0
-        for _ in range(2000):
+        for _ in range(100):
             create_user = Access(self.connection, self.cursor)
             electoral_key = fake.bban()
             password = fake.password(
